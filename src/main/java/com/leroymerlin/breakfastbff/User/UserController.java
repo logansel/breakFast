@@ -30,12 +30,17 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public UserEntity createUser(@RequestBody UserEntity userEntity){
+    public UserEntity createUser(@RequestBody UserEntity userEntity) {
         return userService.createUser(userEntity);
     }
 
     @PatchMapping("/{ldap}")
-    public UserEntity updateUserByLdap(@PathVariable String ldap,@RequestBody UserEntity userEntity){
+    public UserEntity updateUserByLdap(@PathVariable String ldap, @RequestBody UserEntity userEntity) {
         return userService.updateUserByLdap(ldap, userEntity);
+    }
+
+    @DeleteMapping("/{ldap}")
+    public void deleteUserByLdap(@PathVariable String ldap) {
+        userService.deleteUserByLdap(ldap);
     }
 }

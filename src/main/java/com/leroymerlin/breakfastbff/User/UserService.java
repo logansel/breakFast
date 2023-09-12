@@ -36,5 +36,10 @@ public class UserService {
             throw new UserNotFoundException("User with LDAP : " + ldap + "  was not found in the Database");
         }
     }
+
+    public void deleteUserByLdap(String ldap) {
+        UserEntity userEntityOpt = userRepository.findById(ldap).orElseThrow(() -> new UserNotFoundException("User with LDAP : " + ldap + "  was not found in the Database"));
+        userRepository.deleteById(userEntityOpt.getLdap());
+    }
 }
 
