@@ -39,6 +39,11 @@ public class UserController {
         return userService.updateUserByLdap(ldap, userEntity);
     }
 
+    @DeleteMapping("/all")
+    public void deleteAllUsers() {
+        userService.deleteAllUsers();
+    }
+
     @DeleteMapping("/{ldap}")
     public void deleteUserByLdap(@PathVariable String ldap) {
         userService.deleteUserByLdap(ldap);
