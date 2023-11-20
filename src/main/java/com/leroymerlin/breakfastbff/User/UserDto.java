@@ -1,27 +1,27 @@
 package com.leroymerlin.breakfastbff.User;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Document("user")
-public class UserEntity {
-    @Id
+public class UserDto {
     private String ldap;
     private String name;
     private String surname;
     private String sexe;
     private String email;
     private String password;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime nextBreakFast;
-    private final LocalDateTime creationDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime creationDate;
     private int numberOfBreakFastOrganised;
 }
-

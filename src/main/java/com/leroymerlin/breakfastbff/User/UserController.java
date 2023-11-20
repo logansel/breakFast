@@ -1,11 +1,9 @@
 package com.leroymerlin.breakfastbff.User;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/user")
 @RestController
@@ -13,30 +11,28 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserEntity>> getAllUser() {
-        List<UserEntity> userEntityList = userService.getAllUser();
-        if (userEntityList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(userEntityList);
-        }
+    public List<UserDto> getAllUser() {
+        return userService.getAllUser()
+                .stream()
+                .map(userMapper::entityToDto)
+                .toList();
     }
 
     @GetMapping("/{ldap}")
-    public Optional<UserEntity> getUserByLdap(@PathVariable String ldap) {
-        return userService.getUserByLdap(ldap);
+    public UserDto getUserByLdap(@PathVariable String ldap) {
+        return userMapper.entityToDto(userService.getUserByLdap(ldap));
     }
-
     @PostMapping("/")
-    public UserEntity createUser(@RequestBody UserEntity userEntity) {
-        return userService.createUser(userEntity);
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        return userMapper.entityToDto(userService.createUser(userDto));
     }
 
     @PatchMapping("/{ldap}")
-    public UserEntity updateUserByLdap(@PathVariable String ldap, @RequestBody UserEntity userEntity) {
-        return userService.updateUserByLdap(ldap, userEntity);
+    public UserDto updateUserByLdap(@PathVariable String ldap, @RequestBody UserDto userDto) {
+        return userMapper.entityToDto(userService.updateUserByLdap(ldap, userDto));
     }
 
     @DeleteMapping("/all")
