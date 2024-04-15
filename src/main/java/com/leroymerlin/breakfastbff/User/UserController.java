@@ -1,48 +1,67 @@
 package com.leroymerlin.breakfastbff.User;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-@RequestMapping("/user")
+@RequestMapping("/users")
+@Tag(name = "User")
 @RestController
 @CrossOrigin
 @AllArgsConstructor
 public class UserController {
 
-    private final UserService userService;
-    private final UserMapper userMapper;
+  private final UserService userService;
+  private final UserMapper userMapper;
 
-    @GetMapping("/all")
-    public List<UserDto> getAllUser() {
-        return userService.getAllUser()
-                .stream()
-                .map(userMapper::entityToDto)
-                .toList();
-    }
+  @Operation(summary = "Returns all users in BDD", description = "Returns all users in BDD")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "All users returned successfully",
+          content = {@Content(mediaType = "application/json",
+              schema = @Schema(implementation = UserEntity.class))}),
+      @ApiResponse(responseCode = "400", description = "Any users exists")})
+  @GetMapping("/all")
+  public Page<UserDto> getAllUser(Pageable pageable) {
+    return userService.getAllUser(pageable).map(userMapper::entityToDto);
+  }
 
-    @GetMapping("/{ldap}")
-    public UserDto getUserByLdap(@PathVariable String ldap) {
-        return userMapper.entityToDto(userService.getUserByLdap(ldap));
-    }
-    @PostMapping("/")
-    public UserDto createUser(@RequestBody UserDto userDto) {
-        return userMapper.entityToDto(userService.createUser(userDto));
-    }
+  @Operation(summary = "Returns user by LDAP", description = "Returns user by LDAP")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User returned successfully", content = {
+          @Content(mediaType = "application/json",
+              schema = @Schema(implementation = UserEntity.class))}),
+      @ApiResponse(responseCode = "400", description = "Any user exists with this LDAP")})
+  @GetMapping("/{ldap}")
+  public UserDto getUserByLdap(@PathVariable String ldap) {
+    return userMapper.entityToDto(userService.getUserByLdap(ldap));
+  }
 
-    @PatchMapping("/{ldap}")
-    public UserDto updateUserByLdap(@PathVariable String ldap, @RequestBody UserDto userDto) {
-        return userMapper.entityToDto(userService.updateUserByLdap(ldap, userDto));
-    }
+  @PostMapping
+  public UserDto createUser(@Valid @RequestBody UserDto userDto) {
+    return userMapper.entityToDto(userService.createUser(userDto));
+  }
 
-    @DeleteMapping("/all")
-    public void deleteAllUsers() {
-        userService.deleteAllUsers();
-    }
+  @PatchMapping("/{ldap}")
+  public UserDto updateUserByLdap(@PathVariable String ldap, @RequestBody UserDto userDto) {
+    return userMapper.entityToDto(userService.updateUserByLdap(ldap, userDto));
+  }
 
-    @DeleteMapping("/{ldap}")
-    public void deleteUserByLdap(@PathVariable String ldap) {
-        userService.deleteUserByLdap(ldap);
-    }
+  @DeleteMapping("/all")
+  public void deleteAllUsers() {
+    userService.deleteAllUsers();
+  }
+
+  @DeleteMapping("/{ldap}")
+  public void deleteUserByLdap(@PathVariable String ldap) {
+    userService.deleteUserByLdap(ldap);
+  }
 }

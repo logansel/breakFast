@@ -1,27 +1,41 @@
 package com.leroymerlin.breakfastbff.User;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private String ldap;
-    private String name;
-    private String surname;
-    private String sexe;
-    private String email;
+  @Id
+  @NotBlank(message = "The LDAP must be defined.")
+  private String ldap;
+  private String firstName;
+  private String lastName;
+  private String picture;
+  private LocalDate nextBreakFast;
+  private String email;
+  private LocalDate lastOrganizedBreakfastDate;
+  private LocalDate nextOrganizedBreakfastDate;
+  private int numberOfBreakFastOrganised;
+  private List<RoleEnum> role;
+  private LocalDate creationDate;
+  private UserEntity.Login login;
+
+
+  @Getter
+  @AllArgsConstructor
+  public static class Login implements Serializable {
+    private String username;
     private String password;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime nextBreakFast;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime creationDate;
-    private int numberOfBreakFastOrganised;
+  }
 }
