@@ -36,8 +36,8 @@ public class UserController {
 
   @Operation(summary = "Returns user by LDAP", description = "Returns user by LDAP")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "User returned successfully", content = {
-          @Content(mediaType = "application/json",
+      @ApiResponse(responseCode = "200", description = "User returned successfully",
+          content = {@Content(mediaType = "application/json",
               schema = @Schema(implementation = UserEntity.class))}),
       @ApiResponse(responseCode = "400", description = "Any user exists with this LDAP")})
   @GetMapping("/{ldap}")

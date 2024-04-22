@@ -15,9 +15,8 @@ public class UserControllerAdvice {
 
   @ExceptionHandler(UserNotFoundException.class)
   public ResponseEntity<Object> userNotFoundException(Exception exception, WebRequest request) {
-    return new ResponseEntity<>(
-        UserErrorResponse.create(LocalDateTime.now(), exception.getMessage(),
-            request.getDescription(false)), HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(UserErrorResponse.create(LocalDateTime.now(),
+        exception.getMessage(), request.getDescription(false)), HttpStatus.NOT_FOUND);
   }
 
   @Data

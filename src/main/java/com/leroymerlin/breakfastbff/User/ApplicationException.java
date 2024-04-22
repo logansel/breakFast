@@ -16,7 +16,7 @@ public class ApplicationException extends RuntimeException {
    * Constructor of the exception to return the status and the error message at the application.
    *
    * @param errCode Error code, like 4xx or 5xx.
-   * @param errMsg  Error message to send.
+   * @param errMsg Error message to send.
    */
   public ApplicationException(HttpStatus errCode, String errMsg) {
     super(errMsg);

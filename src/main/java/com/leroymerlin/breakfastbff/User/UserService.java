@@ -39,8 +39,8 @@ public class UserService {
   }
 
   public UserEntity updateUserByLdap(String ldap, UserDto userDto) {
-    UserEntity userEntity = userRepository.findById(ldap).orElseThrow(
-        () -> new UserNotFoundException(HttpStatus.BAD_REQUEST,
+    UserEntity userEntity = userRepository.findById(ldap)
+        .orElseThrow(() -> new UserNotFoundException(HttpStatus.BAD_REQUEST,
             "User with LDAP : " + ldap + "  was not found in the Database"));
 
     userEntity.setFirstName(userDto.getFirstName());
@@ -55,8 +55,8 @@ public class UserService {
   }
 
   public void deleteUserByLdap(String ldap) {
-    UserEntity userEntityOpt = userRepository.findById(ldap).orElseThrow(
-        () -> new UserNotFoundException(HttpStatus.BAD_REQUEST,
+    UserEntity userEntityOpt = userRepository.findById(ldap)
+        .orElseThrow(() -> new UserNotFoundException(HttpStatus.BAD_REQUEST,
             "User with LDAP : " + ldap + "  was not found in the Database"));
     userRepository.deleteById(userEntityOpt.getLdap());
   }
