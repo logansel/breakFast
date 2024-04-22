@@ -1,5 +1,6 @@
 package com.leroymerlin.breakfastbff.User;
 
+import com.leroymerlin.breakfastbff.HandlerException.ApplicationException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
