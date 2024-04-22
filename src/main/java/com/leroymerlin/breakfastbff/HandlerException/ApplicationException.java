@@ -1,4 +1,4 @@
-package com.leroymerlin.breakfastbff.User;
+package com.leroymerlin.breakfastbff.HandlerException;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
