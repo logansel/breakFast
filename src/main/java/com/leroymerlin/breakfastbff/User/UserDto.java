@@ -19,10 +19,14 @@ public class UserDto {
   @Id
   @NotBlank(message = "The LDAP must be defined.")
   private String ldap;
+  @NotBlank
   private String firstName;
+  @NotBlank
   private String lastName;
+  @NotBlank
   private String picture;
   private LocalDate nextBreakFast;
+  @NotBlank
   private String email;
   private LocalDate lastOrganizedBreakfastDate;
   private LocalDate nextOrganizedBreakfastDate;

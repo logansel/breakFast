@@ -1,5 +1,6 @@
 package com.leroymerlin.breakfastbff.User;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,11 +17,15 @@ import java.util.List;
 @Document("user")
 public class UserEntity {
   @Id
+  @NotBlank
   private String ldap;
+  @NotBlank
   private String firstName;
+  @NotBlank
   private String lastName;
   private String picture;
   private LocalDate nextBreakFast;
+  @NotBlank
   private String email;
   private LocalDate lastOrganizedBreakfastDate;
   private LocalDate nextOrganizedBreakfastDate;

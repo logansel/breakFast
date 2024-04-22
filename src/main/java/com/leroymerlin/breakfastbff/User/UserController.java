@@ -51,7 +51,7 @@ public class UserController {
   }
 
   @PatchMapping("/{ldap}")
-  public UserDto updateUserByLdap(@PathVariable String ldap, @RequestBody UserDto userDto) {
+  public UserDto updateUserByLdap(@PathVariable String ldap, @Valid @RequestBody UserDto userDto) {
     return userMapper.entityToDto(userService.updateUserByLdap(ldap, userDto));
   }
 
