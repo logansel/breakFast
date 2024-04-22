@@ -16,27 +16,27 @@ public class UserControllerAdvice {
   @ExceptionHandler(UserNotFoundException.class)
   public ResponseEntity<Object> userNotFoundException(Exception exception, WebRequest request) {
     return new ResponseEntity<>(
-        QrCodeErrorResponse.create(LocalDateTime.now(), exception.getMessage(),
+        UserErrorResponse.create(LocalDateTime.now(), exception.getMessage(),
             request.getDescription(false)), HttpStatus.NOT_FOUND);
   }
 
   @Data
-  public static class QrCodeErrorResponse {
+  public static class UserErrorResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private LocalDateTime timestamp;
     private String message;
     private String details;
 
 
-    public QrCodeErrorResponse(LocalDateTime timestamp, String message, String details) {
+    public UserErrorResponse(LocalDateTime timestamp, String message, String details) {
       this.timestamp = timestamp;
       this.message = message;
       this.details = details;
     }
 
-    public static QrCodeErrorResponse create(LocalDateTime timestamp, String message,
+    public static UserErrorResponse create(LocalDateTime timestamp, String message,
         String details) {
-      return new QrCodeErrorResponse(timestamp, message, details);
+      return new UserErrorResponse(timestamp, message, details);
     }
   }
 }
