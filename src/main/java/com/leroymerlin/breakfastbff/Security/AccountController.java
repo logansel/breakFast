@@ -11,12 +11,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Accounts API")
 @RestController
@@ -29,6 +27,10 @@ public class AccountController {
   private final SecurityContextRepository securityContextRepository =
       new HttpSessionSecurityContextRepository();
 
+  // Pour logout
+  private final SecurityContextLogoutHandler securityContextLogoutHandler =
+      new SecurityContextLogoutHandler();
+
   @PostMapping("/login")
   public void login(@RequestBody @Valid UserEntity.Login credentials, HttpServletRequest request,
       HttpServletResponse response) {
@@ -40,6 +42,12 @@ public class AccountController {
     SecurityContext securityContext = SecurityContextHolder.getContext();
     securityContext.setAuthentication(authentication);
     securityContextRepository.saveContext(securityContext, request, response);
+  }
+
+  @GetMapping("/logout")
+  public void logout(Authentication authentication, HttpServletRequest request,
+      HttpServletResponse response) {
+    securityContextLogoutHandler.logout(request, response, authentication);
   }
 
 }

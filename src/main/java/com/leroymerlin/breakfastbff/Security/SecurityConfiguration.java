@@ -3,6 +3,7 @@ package com.leroymerlin.breakfastbff.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,7 +42,11 @@ public class SecurityConfiguration {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(authorizations -> authorizations.requestMatchers("/swagger-ui/**")
             .permitAll().requestMatchers("/v3/api-docs/**").permitAll()
-            .requestMatchers("/accounts/login").permitAll().anyRequest().authenticated());
+            .requestMatchers("/accounts/login").permitAll().requestMatchers("/healthcheck")
+            .permitAll().requestMatchers(HttpMethod.POST, "users/**").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.PATCH, "users/**").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.DELETE, "users/**").hasAuthority("ADMIN").anyRequest()
+            .authenticated());
     return http.build();
   }
 }
