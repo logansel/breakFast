@@ -45,9 +45,10 @@ public class SecurityConfiguration {
             .permissionsPolicy(permissionsPolicyConfig -> permissionsPolicyConfig
                 .policy("fullscreen=(self), geolocation=(), microphone=(), camera=()")))
         .authorizeHttpRequests(authorizations -> authorizations.requestMatchers("/swagger-ui/**")
-            .permitAll().requestMatchers("/v3/api-docs/**").permitAll()
-            .requestMatchers("/accounts/login").permitAll().requestMatchers("/healthcheck")
-            .permitAll().requestMatchers(HttpMethod.POST, "users/**").hasAuthority("ADMIN")
+            .permitAll().requestMatchers("/actuator/**").permitAll()
+            .requestMatchers("/v3/api-docs/**").permitAll().requestMatchers("/accounts/login")
+            .permitAll().requestMatchers("/healthcheck").permitAll()
+            .requestMatchers(HttpMethod.POST, "users/**").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.PATCH, "users/**").hasAuthority("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "users/**").hasAuthority("ADMIN").anyRequest()
             .authenticated());
