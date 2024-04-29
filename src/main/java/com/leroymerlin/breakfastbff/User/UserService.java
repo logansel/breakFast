@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.leroymerlin.breakfastbff.User.PasswordHashing.passwordHashing;
 
 @Service
 @AllArgsConstructor
@@ -32,8 +35,10 @@ public class UserService {
     if (userDto == null) {
       throw new UserNotFoundException(HttpStatus.BAD_REQUEST, "UserDto is null");
     } else {
-      userDto.setRole(userDto.getRole());
+      userDto.setRole(List.of(RoleEnum.USER));
       userDto.setCreationDate(LocalDateTime.now().toLocalDate());
+      userDto.setLogin(new UserEntity.Login(userDto.getLogin().getPassword(),
+          passwordHashing(userDto.getLogin().getPassword())));
       return userRepository.save(userMapper.dtoToEntity(userDto));
     }
   }
