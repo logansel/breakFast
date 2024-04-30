@@ -26,10 +26,10 @@ class UserRepositoryTest {
   @Test
   void findByLogin_Username() {
     // GIVEN
-    UserEntity userEntity = new UserEntity("10071089", "Logan", "sel", Strings.EMPTY,
-        LocalDate.of(2025, 12, 24), "logan.choupachups@gmail.com", LocalDate.of(2025, 12, 24),
-        LocalDate.of(2025, 12, 24), 3, List.of(RoleEnum.ADMIN), LocalDate.of(2025, 12, 24),
-        new UserEntity.Login("machi", "couli"));
+    UserEntity userEntity =
+        new UserEntity("10071089", "Logan", "sel", Strings.EMPTY, "logan.choupachups@gmail.com",
+            LocalDate.of(2025, 12, 24), LocalDate.of(2025, 12, 24), 3, List.of(RoleEnum.ADMIN),
+            LocalDate.of(2025, 12, 24), new UserEntity.Login("machi", "couli"));
 
     when(userRepository.findByLogin_Username("chupachups")).thenReturn(Optional.of(userEntity));
     brekafastUserDetailsService.loadUserByUsername("chupachups");

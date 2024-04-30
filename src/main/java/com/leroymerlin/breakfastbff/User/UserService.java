@@ -35,7 +35,7 @@ public class UserService {
     if (userDto == null) {
       throw new UserNotFoundException(HttpStatus.BAD_REQUEST, "UserDto is null");
     } else {
-      userDto.setRole(List.of(RoleEnum.USER));
+      userDto.setRoles(List.of(RoleEnum.USER));
       userDto.setCreationDate(LocalDateTime.now().toLocalDate());
       userDto.setLogin(new UserEntity.Login(userDto.getLogin().getPassword(),
           passwordHashing(userDto.getLogin().getPassword())));
@@ -48,10 +48,9 @@ public class UserService {
         .orElseThrow(() -> new UserNotFoundException(HttpStatus.BAD_REQUEST,
             "User with LDAP : " + ldap + "  was not found in the Database"));
 
-    userEntity.setFirstName(userDto.getFirstName());
-    userEntity.setLastName(userDto.getLastName());
+    userEntity.setFirstname(userDto.getFirstname());
+    userEntity.setLastname(userDto.getLastname());
     userEntity.setPicture(userDto.getPicture());
-    userEntity.setNextBreakFast(userDto.getNextBreakFast());
     userEntity.setEmail(userDto.getEmail());
     userEntity.setLastOrganizedBreakfastDate(userDto.getLastOrganizedBreakfastDate());
     userEntity.setNextOrganizedBreakfastDate(userDto.getNextOrganizedBreakfastDate());

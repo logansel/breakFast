@@ -20,17 +20,16 @@ public class UserEntity {
   @NotBlank
   private String ldap;
   @NotBlank
-  private String firstName;
+  private String firstname;
   @NotBlank
-  private String lastName;
+  private String lastname;
   private String picture;
-  private LocalDate nextBreakFast;
   @NotBlank
   private String email;
   private LocalDate lastOrganizedBreakfastDate;
   private LocalDate nextOrganizedBreakfastDate;
   private int numberOfBreakFastOrganised;
-  private List<RoleEnum> role;
+  private List<RoleEnum> roles;
   private final LocalDate creationDate;
   private Login login;
 
