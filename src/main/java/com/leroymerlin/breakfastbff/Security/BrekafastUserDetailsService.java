@@ -30,8 +30,8 @@ public class BrekafastUserDetailsService implements UserDetailsService {
   private User createSecurityUser(UserEntity userEntity) {
     // création d'une list de SimpleGrantedAuthority pour respecter le contrat USER qui a un Login /
     // Password / List<Roles>
-    List<SimpleGrantedAuthority> grantedRoles =
-        userEntity.getRole().stream().map(RoleEnum::name).map(SimpleGrantedAuthority::new).toList();
+    List<SimpleGrantedAuthority> grantedRoles = userEntity.getRoles().stream().map(RoleEnum::name)
+        .map(SimpleGrantedAuthority::new).toList();
     return new User(userEntity.getLogin().getUsername(), userEntity.getLogin().getPassword(),
         grantedRoles);
   }
