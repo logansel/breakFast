@@ -49,7 +49,7 @@ public class SecurityConfiguration {
             .requestMatchers("/v3/api-docs/**").permitAll().requestMatchers("/accounts/login")
             .permitAll().requestMatchers("/healthcheck").permitAll()
             .requestMatchers(HttpMethod.POST, "users/**").hasAuthority("ADMIN")
-            .requestMatchers(HttpMethod.PATCH, "users/**").hasAuthority("ADMIN")
+            .requestMatchers(HttpMethod.PATCH, "users/**").permitAll()
             .requestMatchers(HttpMethod.DELETE, "users/**").hasAuthority("ADMIN").anyRequest()
             .authenticated());
     return http.build();
